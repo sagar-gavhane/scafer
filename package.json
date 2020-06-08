@@ -1,0 +1,24 @@
+{
+  "name": "sandbox",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "scaf": "script.js"
+  },
+  "scripts": {
+    "start": "cross-env DEBUG=* ./script.js"
+  },
+  "keywords": [],
+  "author": "sagar",
+  "license": "ISC",
+  "dependencies": {
+    "debug": "~4.1.1",
+    "directory-tree": "~2.2.4",
+    "minimist": "~1.2.5",
+    "pascal-case": "~3.1.1"
+  },
+  "devDependencies": {
+    "cross-env": "~7.0.2"
+  }
+}
