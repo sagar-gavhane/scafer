@@ -11,9 +11,12 @@ log("argv %o", argv);
 if (Array.isArray(argv._) && argv._.length > 0) {
   try {
     const componentName = pascalCase(argv._[0]);
-    log("componentName", componentName);
-
     const directoryName = `${process.cwd()}/${componentName}`;
+    const relativeDirectoryPath = path.relative(
+      process.cwd(),
+      `${directoryName}`
+    );
+
     fs.mkdirSync(directoryName);
     log(`✅ created ${componentName} directory`);
 
@@ -21,48 +24,28 @@ if (Array.isArray(argv._) && argv._.length > 0) {
       `${directoryName}/index.js`,
       `import ${componentName} from './${componentName}'\n\nexport default ${componentName}`
     );
-    log(
-      `✅ created ${path.relative(
-        process.cwd(),
-        `${directoryName}/index.js`
-      )} file`
-    );
+    log(`✅ created ${relativeDirectoryPath}/index.js file`);
 
     fs.writeFileSync(
       `${directoryName}/${componentName}.jsx`,
-      `const ${componentName} = () => {\n\treturn <div />\n}`
+      `import React from 'react'\n\nconst ${componentName} = () => {\n\treturn <div />\n}\n\nexport default ${componentName}`
     );
-    log(
-      `✅ created ${path.relative(
-        process.cwd(),
-        `${directoryName}/${componentName}.jsx`
-      )} file`
-    );
+    log(`✅ created ${relativeDirectoryPath}/${componentName}.jsx file`);
 
     fs.writeFileSync(
       `${directoryName}/styles.js`,
       `import styled from 'styled-components'`
     );
-    log(
-      `✅ created ${path.relative(
-        process.cwd(),
-        `${directoryName}/styles.js`
-      )} file`
-    );
+    log(`✅ created ${relativeDirectoryPath}/styles.js file`);
 
     fs.writeFileSync(
       `${directoryName}/${componentName}.test.jsx`,
       `import React from 'react'\nimport ${componentName} from './${componentName}'\n\nit('should render <${componentName} />', () => {\n\n})`
     );
-    log(
-      `✅ created ${path.relative(
-        process.cwd(),
-        `${directoryName}/${componentName}.test.jsx`
-      )} file`
-    );
+    log(`✅ created ${relativeDirectoryPath}/${componentName}.test.jsx file`);
   } catch (err) {
-    console.log("Error occured while running scaf script:", err);
+    console.error("Error occured while running scaf script:", err);
   }
 } else {
-  console.log("Please provide component name");
+  console.error("Please provide component name.");
 }
