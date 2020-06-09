@@ -3,49 +3,66 @@
 const fs = require("fs");
 const path = require("path");
 const argv = require("minimist")(process.argv.slice(2));
-const log = require("debug")("scaf");
+const isValid = require("is-valid-path");
 const { pascalCase } = require("pascal-case");
-
-log("argv %o", argv);
 
 if (Array.isArray(argv._) && argv._.length > 0) {
   try {
     const componentName = pascalCase(argv._[0]);
-    const directoryName = `${process.cwd()}/${componentName}`;
+    const directoryName = argv.dir
+      ? `${argv.dir}/${componentName}`
+      : `${process.cwd()}/${componentName}`;
     const relativeDirectoryPath = path.relative(
       process.cwd(),
       `${directoryName}`
     );
+    const tsEnabled = argv.typescript || false;
+    const ext = {
+      vanilla: tsEnabled ? "ts" : "js",
+      jsx: tsEnabled ? "tsx" : "jsx",
+    };
 
-    fs.mkdirSync(directoryName);
-    log(`✅ created ${componentName} directory`);
+    if (!isValid(directoryName)) {
+      throw new Error("Please provide valid directory name");
+    }
+
+    fs.mkdirSync(directoryName, { recursive: true });
+    console.log(`✅ created ${componentName} directory`);
 
     fs.writeFileSync(
-      `${directoryName}/index.js`,
+      `${directoryName}/index.${ext.vanilla}`,
       `import ${componentName} from './${componentName}'\n\nexport default ${componentName}`
     );
-    log(`✅ created ${relativeDirectoryPath}/index.js file`);
+    console.log(
+      `✅ created ${relativeDirectoryPath}/index.${ext.vanilla} file`
+    );
 
     fs.writeFileSync(
-      `${directoryName}/${componentName}.jsx`,
+      `${directoryName}/${componentName}.${ext.jsx}`,
       `import React from 'react'\n\nconst ${componentName} = () => {\n\treturn <div />\n}\n\nexport default ${componentName}`
     );
-    log(`✅ created ${relativeDirectoryPath}/${componentName}.jsx file`);
+    console.log(
+      `✅ created ${relativeDirectoryPath}/${componentName}.${ext.jsx} file`
+    );
 
     fs.writeFileSync(
-      `${directoryName}/styles.js`,
+      `${directoryName}/styles.${ext.vanilla}`,
       `import styled from 'styled-components'`
     );
-    log(`✅ created ${relativeDirectoryPath}/styles.js file`);
+    console.log(
+      `✅ created ${relativeDirectoryPath}/styles.${ext.vanilla} file`
+    );
 
     fs.writeFileSync(
-      `${directoryName}/${componentName}.test.jsx`,
+      `${directoryName}/${componentName}.test.${ext.jsx}`,
       `import React from 'react'\nimport ${componentName} from './${componentName}'\n\nit('should render <${componentName} />', () => {\n\n})`
     );
-    log(`✅ created ${relativeDirectoryPath}/${componentName}.test.jsx file`);
+    console.log(
+      `✅ created ${relativeDirectoryPath}/${componentName}.test.${ext.jsx} file`
+    );
   } catch (err) {
-    console.error("Error occured while running scaf script:", err);
+    throw new Error(`Error occured while running scaf script: ${err.message}`);
   }
 } else {
-  console.error("Please provide component name.");
+  throw new Error(`Please provide component name.`);
 }

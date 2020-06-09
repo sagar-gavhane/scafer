@@ -1,21 +1,22 @@
 {
-  "name": "sandbox",
+  "name": "@sagar/scaf",
   "version": "1.0.0",
-  "description": "",
+  "description": "scaf cli tool to generate component's boilerplate",
   "main": "index.js",
   "bin": {
     "scaf": "script.js"
   },
   "scripts": {
-    "start": "cross-env DEBUG=* ./script.js"
+    "start": "cross-env DEBUG=* ./script.js",
+    "release": "np"
   },
   "keywords": [],
   "author": "sagar",
   "license": "ISC",
   "dependencies": {
-    "debug": "~4.1.1",
-    "directory-tree": "~2.2.4",
+    "is-valid-path": "^0.1.1",
     "minimist": "~1.2.5",
+    "np": "^6.2.4",
     "pascal-case": "~3.1.1"
   },
   "devDependencies": {
