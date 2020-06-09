@@ -1,10 +1,10 @@
 {
   "name": "scafer",
   "version": "1.0.1",
-  "description": "scaf cli tool to generate component's boilerplate",
+  "description": "scafer cli tool to generate component's boilerplate",
   "main": "index.js",
   "bin": {
-    "scaf": "script.js"
+    "scafer": "script.js"
   },
   "scripts": {
     "start": "cross-env DEBUG=* ./script.js",

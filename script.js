@@ -61,7 +61,9 @@ if (Array.isArray(argv._) && argv._.length > 0) {
       `✅ created ${relativeDirectoryPath}/${componentName}.test.${ext.jsx} file`
     );
   } catch (err) {
-    throw new Error(`Error occured while running scaf script: ${err.message}`);
+    throw new Error(
+      `Error occured while running scafer script: ${err.message}`
+    );
   }
 } else {
   throw new Error(`Please provide component name.`);

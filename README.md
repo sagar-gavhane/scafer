@@ -1,13 +1,13 @@
-# scaf
+# scafer
 
-scaf cli tool to generate component's boilerplate. Basically it will take component name and generate folders and respective files.
+scafer cli tool to generate component's boilerplate. Basically it will take component name and generate folders and respective files.
 
 ## Usage
 
 Run following script to generate boilerplate for `React` component.
 
 ```bash
-scaf Avatar --dir src/components --typescript
+scafer Avatar --dir src/components --typescript
 ```
 
 ## options
