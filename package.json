@@ -1,5 +1,5 @@
 {
-  "name": "@sagar/scaf",
+  "name": "scafer",
   "version": "1.0.0",
   "description": "scaf cli tool to generate component's boilerplate",
   "main": "index.js",
