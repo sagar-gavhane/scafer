@@ -1,6 +1,6 @@
 {
   "name": "scafer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "scaf cli tool to generate component's boilerplate",
   "main": "index.js",
   "bin": {
